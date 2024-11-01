@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { StoreModule } from './store/store.module';
 
 @Component({
+  imports: [StoreModule],
   selector: 'app-root',
   standalone: true,
-  template: `<div class="bg-success p-2 text-center text-white">
-              This is SportsStore
-             </div>`
+  template: "<store></store>"
 })
 export class AppComponent {
   
