@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { StoreModule } from './store/store.module';
+import { StoreFirstGuard } from './storeFirst.guard';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { StoreModule } from './store/store.module';
     RouterLink, 
     RouterLinkActive
   ],
-  standalone: true,
+  standalone: true
 })
 export class AppComponent {
   
