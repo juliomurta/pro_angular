@@ -15,18 +15,19 @@ export class Cart {
         this.recalculate();
     }
 
-    updateQuantity(product: Product, quantity: number) {
+    updateQuantity(product: Product, event: any) {
         let line = this.lines.find(line => line.product.id == product.id);
+        let quantity = Number(event.target.value);
         if(line != undefined) {
             line.quantity = Number(quantity);
         }
         this.recalculate();
     }
 
-    removeLine(id: number) {
+    removeLine(id?: number) {        
         let index = this.lines.findIndex(line => line.product.id == id);
         this.lines.splice(index, 1);
-        this.recalculate();
+        this.recalculate();        
     }
 
     clear() {
@@ -40,7 +41,7 @@ export class Cart {
         this.cartPrice = 0;
         this.lines.forEach(line => {
             this.itemCount += line.quantity;
-            this.cartPrice += (line.quantity + line.product.price!);
+            this.cartPrice += (line.quantity * line.product.price!);
         });
     }
 }
