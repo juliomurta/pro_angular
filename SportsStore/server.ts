@@ -1,4 +1,41 @@
-import { APP_BASE_HREF } from '@angular/common';
+const express = require("express");
+const https = require("https");
+const fs = require("fs");
+const historyApi = require("connect-history-api-fallback");
+const jsonServer = require("json-server");
+const bodyParser = require("body-parser");
+const auth = require("./authMiddleware.js");
+const router = jsonServer.router("data.json");
+
+const enableHttps = false;
+
+const ssloptions = {
+  cert: '',
+  key: ''
+};
+
+if(enableHttps) {
+  ssloptions.cert = fs.readFileSync('./ssl/sportstore.crt');
+  ssloptions.key = fs.readFileSync('./ssl/sportstore.pem');
+}
+
+const app = express();
+
+app.use(bodyParser.json());
+app.use(auth);
+app.use("/api", router);
+app.use(historyApi());
+app.use("/", express.static("./dist/SportsStore"));
+
+app.listen(80, () => console.log("Http Server running on port 80"));
+
+if (enableHttps) {
+  https.createServer(ssloptions, app).listen(443, () => console.log("Https Server running on port 443"));
+} else {
+  console.log("Https disabled");
+}
+
+/*import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';
 import express from 'express';
 import { fileURLToPath } from 'node:url';
@@ -53,4 +90,4 @@ function run(): void {
   });
 }
 
-run();
+run();*/
