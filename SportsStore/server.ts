@@ -3,7 +3,7 @@ const https = require("https");
 const fs = require("fs");
 const historyApi = require("connect-history-api-fallback");
 const jsonServer = require("json-server");
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const auth = require("./authMiddleware.js");
 const router = jsonServer.router("data.json");
 
@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(auth);
 app.use("/api", router);
 app.use(historyApi());
-app.use("/", express.static("./dist/SportsStore"));
+app.use("/", express.static("./dist/sports-store/browser"));
 
 app.listen(80, () => console.log("Http Server running on port 80"));
 
